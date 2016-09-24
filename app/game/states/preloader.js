@@ -1,4 +1,5 @@
-var TextConfigurer = require("../util/text_configurer")
+var TextConfigurer = require("../util/text_configurer");
+var loadedSprites = require("json!../../../assets/map/Levels/Multi-1/multi-1.json");
 
 var Preloader = function() {};
 
@@ -11,7 +12,7 @@ Preloader.prototype = {
 		this.load.image("tiles", "assets/tiles/volcano-tileset.png");
 		this.load.spritesheet("granny", "assets/textures/granny.png");
 		this.load.spritesheet("enemy", "assets/textures/zombie.png", 157, 102);
-		game.loadSprites = require("../../../assets/map/Levels/Multi-1/multi-1.json");
+		game.loadSprites = loadedSprites;
 
 		cursors = game.input.keyboard.createCursorKeys();
 		mouse = game.input.mouse;
