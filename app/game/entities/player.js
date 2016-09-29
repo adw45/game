@@ -3,9 +3,11 @@ var TextConfigurer = require("../util/text_configurer")
 
 var Player = function (x, y) {
     this.id = game.grannyCounter++;
+    this.isDead = false;
+
     Phaser.Sprite.call(this, game, x, y, "granny");
     game.physics.arcade.enable(this);
-
+    
     // set bounding box
     this.body.collideWorldBounds = true;
     this.body.sourceHeight = 80;
@@ -33,7 +35,9 @@ Player.prototype = Object.create(Phaser.Sprite.prototype);
 
 Player.prototype.update = function() {
     // display bounding box
-    // game.debug.body(this, "rgba(0,255,0,100)", false);
+    if (this.id === game.grannyPointer && !this.isDead) {
+        game.debug.body(this, "rgba(0,255,0,100)", false);
+    }
 
     // if player is moving this will tell it when to stop
     this.checkLocation();    
@@ -58,6 +62,7 @@ Player.prototype.checkLocation = function() {
     // check contact with lava - add "die" callback if contact is made
     game.physics.arcade.overlap(this, level.deathLayer,
         function() {
+            level.players[game.grannyPointer].isDead = true;
             level.killGranny(granny)
         });
 
